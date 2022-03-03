@@ -4,7 +4,8 @@
     <test name="Google Test" parallel="false">
         <parameter name="browser" value=""/>
         <classes>
-            <class name="TC1.TC1_Validate_Google_Search_Result"/>
+            <class name="TC1_Validate_Google_Search_Result">
+        </class>
         </classes>
     </test>
 </suite>
