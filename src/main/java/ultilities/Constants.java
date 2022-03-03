@@ -1,4 +1,4 @@
-package Ultilities;
+package ultilities;
 
 import org.openqa.selenium.WebDriver;
 

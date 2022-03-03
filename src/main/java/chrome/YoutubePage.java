@@ -1,10 +1,8 @@
-package Chrome;
+package chrome;
 
-import Ultilities.Constants;
+import ultilities.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 public class YoutubePage {
 
@@ -31,6 +29,8 @@ public class YoutubePage {
      * Result Page functions
      **/
 
+    public String getVideoTitle(){return videoTitle().getText();}
+
     public void clickPlayButton() {
         playBtn().click();
     }
@@ -39,9 +39,15 @@ public class YoutubePage {
         return playBtn().getAttribute("title").contains("Pause");
     }
 
-    public void playVideo(){
+    public void playVideo() {
         if (!isVideoPlay()) {
             clickPlayButton();
         }
     }
+
+    public void pauseVideoAfter(long second) throws InterruptedException {
+        playVideo();
+        Thread.sleep(second*1000);
+        clickPlayButton();
+        }
 }

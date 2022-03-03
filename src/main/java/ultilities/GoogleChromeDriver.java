@@ -1,4 +1,4 @@
-package Ultilities;
+package ultilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -8,6 +8,7 @@ public class GoogleChromeDriver {
     public static void openChromeBrowser() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--lang=en-GB");
         options.addArguments("--disable-notifications");
         options.addArguments("--start-maximized");
         options.addArguments("--disable-features=EnableEphemeralFlashPermission");

@@ -1,17 +1,21 @@
-import Chrome.GoogleSearchPage;
-import Chrome.YoutubePage;
-import Ultilities.GoogleChromeDriver;
+package testcases;
+
+import chrome.GoogleSearchPage;
+import chrome.YoutubePage;
+import ultilities.GoogleChromeDriver;
+import general.TestGeneral;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class TC2_Validate_1st_Video {
+public class TC2Validate1stVideo extends TestGeneral {
     String _searchKey = "The Beatles";
     GoogleSearchPage ggSPage = new GoogleSearchPage();
     YoutubePage ytbPage;
     SoftAssert softAssert=new SoftAssert();
 
     @Test
-    public void Testcase_1() {
+    public void Testcase_1() throws InterruptedException {
         GoogleChromeDriver.openChromeBrowser();
 
         ggSPage.navigateToGoogle();
@@ -20,14 +24,17 @@ public class TC2_Validate_1st_Video {
 
         String firstVideoTitle = ggSPage.getFirstVideoTitle();
 
-        System.out.println(firstVideoTitle);
-
         ytbPage = ggSPage.openFirstVideo();
 
         ytbPage.playVideo();
 
+        ytbPage.pauseVideoAfter(10);
 
-//        softAssert.assertAll();
+        Assert.assertEquals(firstVideoTitle,ytbPage.getVideoTitle());
+
+        Assert.assertFalse(ytbPage.isVideoPlay());
+
+
     }
 
 }

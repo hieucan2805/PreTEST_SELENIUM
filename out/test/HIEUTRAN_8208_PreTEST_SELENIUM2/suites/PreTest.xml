@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Pre-Test">
-    <test name="Google Test" parallel="false">
+    <test name="Google Test">
         <parameter name="browser" value=""/>
         <classes>
-            <class name="TC1_Validate_Google_Search_Result">
-        </class>
+            <class name="testcases.TC2_Validate_1st_Video">
+            </class>
         </classes>
     </test>
 </suite>
