@@ -39,6 +39,12 @@ public class YoutubePage {
         return playBtn().getAttribute("title").contains("Pause");
     }
 
+    public void pauseVideo() {
+        if (isVideoPlay()) {
+            clickPlayButton();
+        }
+    }
+
     public void playVideo() {
         if (!isVideoPlay()) {
             clickPlayButton();
