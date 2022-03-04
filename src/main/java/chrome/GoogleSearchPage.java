@@ -16,7 +16,6 @@ public class GoogleSearchPage {
     private final By _searchInput = By.name("q");
     private final By _mainResult = By.xpath("//div//h2[@data-attrid='title']/span");
     private final By _videosSection = By.xpath("//div[@id='search']//h3[contains(text(),'Video')]/ancestor::div[@aria-level='2']/following-sibling::div/div/div");
-    private final By _peopleAlsoAskSection = By.xpath("//h3/span[text()='People also ask']/../../div[1]/div");
     private final By _topStoriesSection = By.xpath("//div[starts-with(@id,'NEWS_ARTICLE_RESULT')]");
 
     /**
@@ -34,8 +33,10 @@ public class GoogleSearchPage {
         return Constants.DRIVER.findElements(_videosSection);
     }
 
-    private List<WebElement> peopleAlsoAskSection() {
-        return Constants.DRIVER.findElements(_peopleAlsoAskSection);
+    private List<WebElement> videosTitle(String _searchKey) {
+        By _videosTitle = By.xpath(_videosSection.toString().replaceAll("By.xpath: ","")+"//div[contains(text(),'The Beatles')]");
+        System.out.println(_videosTitle);
+        return Constants.DRIVER.findElements(_videosTitle);
     }
 
     private List<WebElement> topStoriesSection() {
@@ -76,9 +77,9 @@ public class GoogleSearchPage {
         return listTitle;
     }
 
-    public List<String> listPeopleAlsoAskText() {
+    public List<String> listVideosTitleText(String _searchKey) {
         List<String> listTitle = new ArrayList<>();
-        for (WebElement webElement : peopleAlsoAskSection()) {
+        for (WebElement webElement : videosTitle(_searchKey)) {
             String title = webElement.getText();
             listTitle.add(title);
         }
@@ -99,22 +100,16 @@ public class GoogleSearchPage {
         return listVideosText().stream().anyMatch(str -> str.trim().contains(_searchKey));
     }
 
-    public boolean isPeopleAlsoAskText(String _searchKey) {
-        return listPeopleAlsoAskText().stream().anyMatch(str -> str.trim().contains(_searchKey));
-    }
-
     public boolean isTopStoriesText(String _searchKey) {
         return listTopStoriesText().stream().anyMatch(str -> str.trim().contains(_searchKey));
     }
 
-    public String getFirstVideoTitle() {
-        return listVideosText().get(0);
+    public String getFirstVideoTitle(String _searchKey) {
+        return listVideosTitleText(_searchKey).get(0);
     }
 
-    public YoutubePage openFirstVideo() {
+    public void openFirstVideo() {
         videosSection().get(0).click();
-        YoutubePage utbPage = new YoutubePage();
-        return utbPage;
     }
 
 

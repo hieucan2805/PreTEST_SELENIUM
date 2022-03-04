@@ -38,11 +38,6 @@ public class TC1ValidateGoogleSearchResult extends TestGeneral {
         System.out.println("Step 6: Verify the Top Stories");
         Assert.assertTrue(ggSPage.isTopStoriesText(_searchKey), "The special Top Stories sections should contains \"" + _searchKey + "\" text");
 
-        //Step 7: Verify the Also People Ask
-        System.out.println("Step 7: Verify the Also People Ask");
-        Assert.assertTrue(ggSPage.isPeopleAlsoAskText(_searchKey), "The special People Also Ask sections should contains \"" + _searchKey + "\" text");
-
-
     }
 
 }

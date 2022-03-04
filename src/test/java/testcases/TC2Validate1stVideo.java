@@ -12,8 +12,7 @@ import org.testng.asserts.SoftAssert;
 public class TC2Validate1stVideo extends TestGeneral {
     String _searchKey = "The Beatles";
     GoogleSearchPage ggSPage = new GoogleSearchPage();
-    YoutubePage ytbPage;
-    SoftAssert softAssert=new SoftAssert();
+    YoutubePage ytbPage = new YoutubePage();
 
     @Test
     public void Testcase_1() throws InterruptedException {
@@ -27,12 +26,11 @@ public class TC2Validate1stVideo extends TestGeneral {
 
         //"Get the first video title on Videos section"
         System.out.println("Step 3: Get the first video title on Videos section");
-        String firstVideoTitle = ggSPage.getFirstVideoTitle();
+        String firstVideoTitle = ggSPage.getFirstVideoTitle(_searchKey);
 
         //"Step 5: Open the first video"
         System.out.println("Step 5: Open the first video");
-        ytbPage = ggSPage.openFirstVideo();
-//        ytbPage.pauseVideo();
+        ggSPage.openFirstVideo();
 
         //"Step 6: Play and pause video after 10s"
         System.out.println("Step 6: Play and pause video after 10s");

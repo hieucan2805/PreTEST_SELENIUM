@@ -4,7 +4,7 @@
     <test name="Google Test">
         <parameter name="browser" value=""/>
         <classes>
-<!--            <class name="testcases.TC1ValidateGoogleSearchResult"/>-->
+            <class name="testcases.TC1ValidateGoogleSearchResult"/>
             <class name="testcases.TC2Validate1stVideo"/>
         </classes>
     </test>
