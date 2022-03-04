@@ -4,12 +4,10 @@ import chrome.GoogleSearchPage;
 import general.TestGeneral;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 public class TC1ValidateGoogleSearchResult extends TestGeneral {
     String _searchKey = "The Beatles";
     GoogleSearchPage ggSPage = new GoogleSearchPage();
-    SoftAssert softAssert = new SoftAssert();
 
     @Test
     public void Testcase_1() {

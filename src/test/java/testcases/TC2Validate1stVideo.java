@@ -2,12 +2,9 @@ package testcases;
 
 import chrome.GoogleSearchPage;
 import chrome.YoutubePage;
-import jdk.jpackage.internal.Log;
-import ultilities.GoogleChromeDriver;
 import general.TestGeneral;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 public class TC2Validate1stVideo extends TestGeneral {
     String _searchKey = "The Beatles";
