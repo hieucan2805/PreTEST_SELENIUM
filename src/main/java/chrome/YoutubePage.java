@@ -10,19 +10,19 @@ public class YoutubePage {
      * Result Page
      **/
     /* Google Page locate */
-    private final By _playButton = By.xpath("//button[@class=\"ytp-play-button ytp-button\"]");
-    private final By _videoTitle = By.xpath("//h1[@class=\"title style-scope ytd-video-primary-info-renderer\"]");
+    private final By playButton = By.xpath("//button[@class=\"ytp-play-button ytp-button\"]");
+    private final By videoTitle = By.xpath("//h1[@class=\"title style-scope ytd-video-primary-info-renderer\"]");
 
 
     /**
      * Result Page Web Element
      **/
     private WebElement playBtn() {
-        return Constants.DRIVER.findElement(_playButton);
+        return Constants.DRIVER.findElement(playButton);
     }
 
     private WebElement videoTitle() {
-        return Constants.DRIVER.findElement(_videoTitle);
+        return Constants.DRIVER.findElement(videoTitle);
     }
 
     /**

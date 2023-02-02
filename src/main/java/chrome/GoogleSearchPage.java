@@ -13,34 +13,34 @@ public class GoogleSearchPage {
      * Result Page
      **/
     /* Google Page locate */
-    private final By _searchInput = By.name("q");
-    private final By _mainResult = By.xpath("//div//h2[@data-attrid='title']/span");
-    private final By _videosSection = By.xpath("//div[@id='search']//h3[contains(text(),'Video')]/ancestor::div[@aria-level='2']/following-sibling::div/div/div");
-    private final By _topStoriesSection = By.xpath("//div[starts-with(@id,'NEWS_ARTICLE_RESULT')]");
+    private final By searchInput = By.name("q");
+    private final By mainResult = By.xpath("//div[@data-attrid='title']/span[@role='heading']");
+    private final By videosListInVideosSection = By.xpath("//div[@id='search']//div[contains(text(),'Video')]/ancestor::div[@role='heading']/parent::div/following-sibling::div//video-voyager");
+    private final By topStoriesSection = By.xpath("//span[text()='More news']/ancestor::g-section-with-header");
 
     /**
      * Result Page Web Element
      **/
     private WebElement searchInput() {
-        return Constants.DRIVER.findElement(_searchInput);
+        return Constants.DRIVER.findElement(searchInput);
     }
 
     private WebElement mainResult() {
-        return Constants.DRIVER.findElement(_mainResult);
+        return Constants.DRIVER.findElement(mainResult);
     }
 
     private List<WebElement> videosSection() {
-        return Constants.DRIVER.findElements(_videosSection);
+        return Constants.DRIVER.findElements(videosListInVideosSection);
     }
 
-    private List<WebElement> videosTitle(String _searchKey) {
-        By _videosTitle = By.xpath(_videosSection.toString().replaceAll("By.xpath: ","")+"//div[contains(text(),'The Beatles')]");
+    private List<WebElement> videosTitle(String searchKey) {
+        By _videosTitle = By.xpath(videosListInVideosSection.toString().replaceAll("By.xpath: ","")+"//div[contains(text(),'The Beatles')]");
         System.out.println(_videosTitle);
         return Constants.DRIVER.findElements(_videosTitle);
     }
 
     private List<WebElement> topStoriesSection() {
-        return Constants.DRIVER.findElements(_topStoriesSection);
+        return Constants.DRIVER.findElements(topStoriesSection);
     }
 
     /**
@@ -50,12 +50,12 @@ public class GoogleSearchPage {
         Constants.DRIVER.get(Constants.GOOGLE_URL);
     }
 
-    public void inputSearchBox(String _searchKey) {
-        searchInput().sendKeys(_searchKey);
+    public void inputSearchBox(String searchKey) {
+        searchInput().sendKeys(searchKey);
     }
 
-    public void SearchWithSearchKey(String _searchKey) {
-        inputSearchBox(_searchKey);
+    public void SearchWithSearchKey(String searchKey) {
+        inputSearchBox(searchKey);
         searchInput().sendKeys(Keys.RETURN);
     }
 
@@ -77,13 +77,22 @@ public class GoogleSearchPage {
         return listTitle;
     }
 
-    public List<String> listVideosTitleText(String _searchKey) {
+    public List<String> listVideosTitleText(String searchKey) {
         List<String> listTitle = new ArrayList<>();
-        for (WebElement webElement : videosTitle(_searchKey)) {
+        for (WebElement webElement : videosTitle(searchKey)) {
             String title = webElement.getText();
             listTitle.add(title);
         }
         listTitle.remove(listTitle.size() - 1);
+        return listTitle;
+    }
+
+    public List<String> listPeopleAlsoAskTitle() {
+        List<String> listTitle = new ArrayList<>();
+        for (WebElement webElement : topStoriesSection()) {
+            String title = webElement.getText();
+            listTitle.add(title);
+        }
         return listTitle;
     }
 
@@ -96,16 +105,20 @@ public class GoogleSearchPage {
         return listTitle;
     }
 
-    public boolean isVideoText(String _searchKey) {
-        return listVideosText().stream().anyMatch(str -> str.trim().contains(_searchKey));
+    public boolean isVideoContains(String searchKey) {
+        return listVideosText().stream().anyMatch(str -> str.trim().contains(searchKey));
     }
 
-    public boolean isTopStoriesText(String _searchKey) {
-        return listTopStoriesText().stream().anyMatch(str -> str.trim().contains(_searchKey));
+    public boolean iSPeopleAlsoAskContains(String searchKey) {
+        return listTopStoriesText().stream().anyMatch(str -> str.trim().contains(searchKey));
     }
 
-    public String getFirstVideoTitle(String _searchKey) {
-        return listVideosTitleText(_searchKey).get(0);
+    public boolean isTopStoriesContains(String searchKey) {
+        return listTopStoriesText().stream().anyMatch(str -> str.trim().contains(searchKey));
+    }
+
+    public String getFirstVideoTitle(String searchKey) {
+        return listVideosTitleText(searchKey).get(0);
     }
 
     public void openFirstVideo() {
