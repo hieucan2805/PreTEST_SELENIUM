@@ -34,9 +34,8 @@ public class GoogleSearchPage {
     }
 
     private List<WebElement> videosTitle(String searchKey) {
-        By _videosTitle = By.xpath(videosListInVideosSection.toString().replaceAll("By.xpath: ","")+"//div[contains(text(),'The Beatles')]");
-        System.out.println(_videosTitle);
-        return Constants.DRIVER.findElements(_videosTitle);
+        By videoTitle = By.xpath(videosListInVideosSection.toString().replaceAll("By.xpath: ","")+"//span[contains(text(),'The Beatles')]");
+        return Constants.DRIVER.findElements(videoTitle);
     }
 
     private List<WebElement> topStoriesSection() {
@@ -110,7 +109,7 @@ public class GoogleSearchPage {
     }
 
     public boolean iSPeopleAlsoAskContains(String searchKey) {
-        return listTopStoriesText().stream().anyMatch(str -> str.trim().contains(searchKey));
+        return listPeopleAlsoAskTitle().stream().anyMatch(str -> str.trim().contains(searchKey));
     }
 
     public boolean isTopStoriesContains(String searchKey) {

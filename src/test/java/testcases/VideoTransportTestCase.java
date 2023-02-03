@@ -12,7 +12,7 @@ public class VideoTransportTestCase extends TestGeneral {
     YoutubePage youTubePage = new YoutubePage();
 
     @Test
-    public void Testcase_1() throws InterruptedException {
+    public void Testcase_1() {
         //Step 1: Navigate to Google
         System.out.println("Step 1: Navigate to Google");
         googleSearchPage.navigateToGoogle();
@@ -31,7 +31,7 @@ public class VideoTransportTestCase extends TestGeneral {
 
         //"Step 6: Play and pause video after 10s"
         System.out.println("Step 6: Play and pause video after 10s");
-        youTubePage.pauseVideoAfter(10);
+        youTubePage.pauseVideoAfterSeconds(10);
 
         //"Step 7: Verify the video title is same to Google result
         System.out.println("Step 7: Verify the video title is same to Google result");
