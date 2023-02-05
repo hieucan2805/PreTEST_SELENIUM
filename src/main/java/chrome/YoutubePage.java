@@ -9,15 +9,17 @@ import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
 
-public class YoutubePage {
 
+public class YoutubePage {
     /**
      * Result Page
      **/
     /* Google Page locate */
     private final By playButtonLocator = By.xpath("//button[@class='ytp-play-button ytp-button']");
-    private final By videoTitleLocator = By.xpath("//h1[@class='title style-scope ytd-video-primary-info-renderer']");
+    private final By nextButtonLocator = By.xpath("//button[@class='ytp-next-button ytp-button']");
+    private final By videoTitleLocator = By.xpath("//div[@id='title']//h1//yt-formatted-string");
     private final By skipAdButtonLocator = By.xpath("//div[contains(@class,'ytp-ad-text ytp-ad-skip-button-text')]");
+    private final By adsVideoLocator = By.xpath("//div[contains(@class,'video-ads')]");
     private final By videoCurrentTimeLabelLocator = By.xpath("//span[@class='ytp-time-current']");
 
 
@@ -28,17 +30,25 @@ public class YoutubePage {
         return Constants.DRIVER.findElement(playButtonLocator);
     }
 
+    private WebElement nextButton() {
+        return Constants.DRIVER.findElement(nextButtonLocator);
+    }
+
     private WebElement videoTitle() {
         return Constants.DRIVER.findElement(videoTitleLocator);
     }
 
-    private WebElement skipAdButton() {
-        return new WebDriverWait(Constants.DRIVER, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(skipAdButtonLocator));
+    private WebElement adsVideo() {
+        return Constants.DRIVER.findElement(adsVideoLocator);
     }
 
-    private Boolean videoCurrentTimeWithValueIs10Seconds() {
-        By videoCurrentTimeIs10SecondsLocator = By.xpath(videoCurrentTimeLabelLocator.toString().replaceAll("By.xpath: ", "").replaceAll("]", "") + " and text()='0:10']");
-        return new WebDriverWait(Constants.DRIVER, Duration.ofSeconds(1)).until(ExpectedConditions.invisibilityOfElementLocated(videoCurrentTimeIs10SecondsLocator));
+    private WebElement skipAdButton() {
+        return Constants.DRIVER.findElement(skipAdButtonLocator);
+    }
+
+    private WebElement videoCurrentTimeLabel() {
+        return Constants.DRIVER.findElement(videoCurrentTimeLabelLocator);
+
     }
 
     /**
@@ -73,27 +83,62 @@ public class YoutubePage {
     public void pauseVideoAfterSeconds(long seconds) {
         checkAndSkipVideoAds();
         playVideo();
-        while (!videoCurrentTimeWithValueIs10Seconds())
+        moveMouseTo(playButton());
+        while (!(videoCurrentTimeLabel().getText().equals("0:10"))) {
+            System.out.println("Current time: " + videoCurrentTimeLabel().getText());
             moveMouseTo(playButton());
+            if (videoCurrentTimeLabel().getText().equals("0:10")) break;
+        }
+
         pauseVideo();
     }
 
     public void clickSkipAdButton() {
+        System.out.println("Click on Skip Ads button");
+        new WebDriverWait(Constants.DRIVER, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(skipAdButtonLocator));
         skipAdButton().click();
     }
 
-    public boolean isAdsDisplay() {
-        return skipAdButton().isDisplayed();
+    public boolean isElementDisplayed(WebElement webElement) {
+        boolean result = false;
+        try {
+            result = webElement.isDisplayed();
+        } catch (Exception ex) {
+        }
+        return result;
     }
 
     public void checkAndSkipVideoAds() {
         System.out.println("Check and skip Ads");
-
-            while (isAdsDisplay()) clickSkipAdButton();
-
+        waitForElement(adsVideoLocator);
+        while (isElementDisplayed(adsVideo())) {
+            System.out.println("Ads Video appears.");
+            clickSkipAdButton();
+            waitInSeconds(2000);
+            waitForElement(adsVideoLocator);
+        }
+        System.out.println("No Ads Video");
     }
 
     public void moveMouseTo(WebElement webElement) {
-        new Actions(Constants.DRIVER).moveToElement(webElement).perform();
+        Actions action = new Actions(Constants.DRIVER);
+        System.out.println("Move mouse to " + webElement);
+        action.moveToElement(webElement).perform();
+    }
+
+    public void waitForElement(By elementLocator) {
+        try {
+            WebDriverWait wait = new WebDriverWait(Constants.DRIVER, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.presenceOfElementLocated(elementLocator));
+        } catch (Exception e) {
+        }
+    }
+
+    public void waitInSeconds(long miliseconds){
+        try {
+            Thread.sleep(miliseconds);
+        } catch (InterruptedException ex) {
+        }
     }
 }

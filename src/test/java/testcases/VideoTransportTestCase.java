@@ -24,6 +24,7 @@ public class VideoTransportTestCase extends TestGeneral {
         //"Get the first video title on Videos section"
         System.out.println("Step 3: Get the first video title on Videos section");
         String firstVideoTitle = googleSearchPage.getFirstVideoTitle(searchKey);
+        System.out.println(firstVideoTitle);
 
         //"Step 5: Open the first video"
         System.out.println("Step 5: Open the first video");
@@ -35,7 +36,7 @@ public class VideoTransportTestCase extends TestGeneral {
 
         //"Step 7: Verify the video title is same to Google result
         System.out.println("Step 7: Verify the video title is same to Google result");
-        Assert.assertEquals(firstVideoTitle, youTubePage.getVideoTitle());
+        Assert.assertEquals(youTubePage.getVideoTitle(),firstVideoTitle);
 
         //"Step 8: Verify the video is paused accordingly.
         System.out.println("Step 8: Verify the video is paused accordingly.");
