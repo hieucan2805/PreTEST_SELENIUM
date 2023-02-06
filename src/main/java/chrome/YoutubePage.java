@@ -16,7 +16,7 @@ public class YoutubePage {
      **/
     /* Google Page locate */
     private final By playButtonLocator = By.xpath("//button[@class='ytp-play-button ytp-button']");
-    private final By nextButtonLocator = By.xpath("//button[@class='ytp-next-button ytp-button']");
+    private final By nextButtonLocator = By.xpath("//a[@class='ytp-next-button ytp-button']");
     private final By videoTitleLocator = By.xpath("//div[@id='title']//h1//yt-formatted-string");
     private final By skipAdButtonLocator = By.xpath("//div[contains(@class,'ytp-ad-text ytp-ad-skip-button-text')]");
     private final By adsVideoLocator = By.xpath("//div[contains(@class,'video-ads')]");
@@ -85,8 +85,8 @@ public class YoutubePage {
         playVideo();
         moveMouseTo(playButton());
         while (!(videoCurrentTimeLabel().getText().equals("0:10"))) {
-            System.out.println("Current time: " + videoCurrentTimeLabel().getText());
             moveMouseTo(playButton());
+            moveMouseTo(nextButton());
             if (videoCurrentTimeLabel().getText().equals("0:10")) break;
         }
 
@@ -123,7 +123,6 @@ public class YoutubePage {
 
     public void moveMouseTo(WebElement webElement) {
         Actions action = new Actions(Constants.DRIVER);
-        System.out.println("Move mouse to " + webElement);
         action.moveToElement(webElement).perform();
     }
 
