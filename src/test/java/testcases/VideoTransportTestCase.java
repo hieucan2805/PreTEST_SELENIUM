@@ -1,7 +1,7 @@
 package testcases;
 
-import chrome.GoogleSearchPage;
-import chrome.YoutubePage;
+import page.GoogleSearchPage;
+import page.YoutubePage;
 import general.TestGeneral;
 import org.testng.Assert;
 import org.testng.annotations.Test;

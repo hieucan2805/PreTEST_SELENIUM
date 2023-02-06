@@ -1,4 +1,4 @@
-package chrome;
+package page;
 
 import ultilities.Constants;
 import org.openqa.selenium.By;
@@ -17,6 +17,7 @@ public class GoogleSearchPage {
     private final By mainResult = By.xpath("//div[@data-attrid='title']/span[@role='heading']");
     private final By videosListInVideosSection = By.xpath("//div[@id='search']//div[contains(text(),'Video')]/ancestor::div[@role='heading']/parent::div/following-sibling::div//video-voyager");
     private final By topStoriesSection = By.xpath("//span[text()='More news']/ancestor::g-section-with-header");
+    private final By peopleAlsoAskSection = By.xpath("//div[contains(@data-initq,'%s')]");
 
     /**
      * Result Page Web Element
@@ -34,7 +35,12 @@ public class GoogleSearchPage {
     }
 
     private List<WebElement> videosTitle(String searchKey) {
-        By videoTitle = By.xpath(videosListInVideosSection.toString().replaceAll("By.xpath: ","")+"//span[contains(text(),'The Beatles')]");
+        By videoTitle = By.xpath(videosListInVideosSection.toString().replaceAll("By.xpath: ", "") + "//span[contains(text(),'" + searchKey + "')]");
+        return Constants.DRIVER.findElements(videoTitle);
+    }
+
+    private List<WebElement> peopleAlsoAskTitleList(String searchKey) {
+        By videoTitle = By.xpath(peopleAlsoAskSection.toString().replaceAll("By.xpath: ", "").replaceAll("%s",searchKey.toLowerCase()));
         return Constants.DRIVER.findElements(videoTitle);
     }
 
@@ -86,9 +92,9 @@ public class GoogleSearchPage {
         return listTitle;
     }
 
-    public List<String> listPeopleAlsoAskTitle() {
+    public List<String> listPeopleAlsoAskTitle(String searchKey) {
         List<String> listTitle = new ArrayList<>();
-        for (WebElement webElement : topStoriesSection()) {
+        for (WebElement webElement : peopleAlsoAskTitleList(searchKey)) {
             String title = webElement.getText();
             listTitle.add(title);
         }
@@ -109,7 +115,7 @@ public class GoogleSearchPage {
     }
 
     public boolean iSPeopleAlsoAskContains(String searchKey) {
-        return listPeopleAlsoAskTitle().stream().anyMatch(str -> str.trim().contains(searchKey));
+        return listPeopleAlsoAskTitle(searchKey).stream().anyMatch(str -> str.trim().contains(searchKey));
     }
 
     public boolean isTopStoriesContains(String searchKey) {

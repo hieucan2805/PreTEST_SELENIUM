@@ -1,4 +1,4 @@
-package chrome;
+package page;
 
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -104,7 +104,7 @@ public class YoutubePage {
         boolean result = false;
         try {
             result = webElement.isDisplayed();
-        } catch (Exception ex) {
+        } catch (Exception ignore) {
         }
         return result;
     }
@@ -130,14 +130,14 @@ public class YoutubePage {
         try {
             WebDriverWait wait = new WebDriverWait(Constants.DRIVER, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.presenceOfElementLocated(elementLocator));
-        } catch (Exception e) {
+        } catch (Exception ignore) {
         }
     }
 
     public void waitInSeconds(long miliseconds){
         try {
             Thread.sleep(miliseconds);
-        } catch (InterruptedException ex) {
+        } catch (InterruptedException ignore) {
         }
     }
 }

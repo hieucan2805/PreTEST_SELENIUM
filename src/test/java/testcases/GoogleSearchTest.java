@@ -1,9 +1,9 @@
 package testcases;
 
-import chrome.GoogleSearchPage;
 import general.TestGeneral;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import page.GoogleSearchPage;
 
 public class GoogleSearchTest extends TestGeneral {
     String searchKey = "The Beatles";
@@ -33,8 +33,12 @@ public class GoogleSearchTest extends TestGeneral {
         Assert.assertTrue(googleSearchPage.isVideoContains(searchKey), "The Video sections should contains \"" + searchKey + "\" text");
 
         //Step 6: Verify the Top Stories
-        System.out.println("Step 6: Verify the Top Stories");
+        System.out.println("Step 6: Verify the Top Stories section");
         Assert.assertTrue(googleSearchPage.isTopStoriesContains(searchKey), "The special Top Stories sections should contains \"" + searchKey + "\" text");
+
+        //Step 7: Verify the People Also Ask section
+        System.out.println("Step 7: Verify the People Also Ask section");
+        Assert.assertTrue(googleSearchPage.iSPeopleAlsoAskContains(searchKey), "The special Top Stories sections should contains \"" + searchKey + "\" text");
 
     }
 
